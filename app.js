@@ -129,25 +129,27 @@ if(contact2Input) {
     if (sosButton) sosButton.classList.add('sent');
     
     // Get Intelligence Data
-    const blood = localStorage.getItem('vgn_blood') || "Not Provided";
-    const allergies = localStorage.getItem('vgn_allergies') || "None";
+   const hotel = localStorage.getItem('vgn_blood') || "Not Set"; 
+    const room = localStorage.getItem('vgn_allergies') || "Guest";
 
     navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
 
+        // 2. NOW THE COMPUTER KNOWS WHAT 'room' AND 'hotel' ARE
         const smsBody = `VIGN EMERGENCY ALERT!%0A` +
                         `Location: ${mapUrl}%0A` +
                         `Hotel: ${hotel}%0A` +
                         `Room: ${room}`;
 
-        showSmsButton(smsBody); // Trigger the dual buttons
+        showSmsButton(smsBody); 
         window.playSiren();
     }, (err) => {
+        // Same here for the "GPS Off" version
         const smsBody = `VIGN EMERGENCY! (GPS Off)%0A` +
                         `Hotel: ${hotel}%0A` +
-                        `Room Number: ${room}`;
+                        `Room: ${room}`;
         showSmsButton(smsBody);
         window.playSiren();
     }, { enableHighAccuracy: true });
